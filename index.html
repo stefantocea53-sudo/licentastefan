@@ -191,13 +191,13 @@
     .main {
       width: calc(100% - 226px);
       margin-left: 226px;
-      padding: 14px 18px;
+      padding: 14px 14px;
     }
 
     .content {
       width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
+      max-width: 1360px;
+      margin: 0;
     }
 
     .mobile-topbar {
@@ -242,7 +242,7 @@
       grid-template-columns: 1.35fr .65fr;
       gap: 10px;
       margin-bottom: 10px;
-      max-width: 980px;
+      width: 100%;
     }
 
     .top-panel.single {
@@ -433,7 +433,7 @@
       grid-template-columns: repeat(4,minmax(0,1fr));
       gap: 10px;
       margin-bottom: 10px;
-      max-width: 980px;
+      width: 100%;
     }
 
     .card {
@@ -478,7 +478,7 @@
 
     .big-value {
       margin-top: 8px;
-      font-size: clamp(21px,2vw,31px);
+      font-size: clamp(18px,1.55vw,25px);
       line-height: 1;
       letter-spacing: -.065em;
       font-weight: 950;
@@ -493,10 +493,10 @@
 
     .two-col {
       display: grid;
-      grid-template-columns: minmax(0,1.05fr) minmax(260px,.85fr);
+      grid-template-columns: minmax(0,1.05fr) minmax(300px,.85fr);
       gap: 10px;
       margin-bottom: 10px;
-      max-width: 980px;
+      width: 100%;
     }
 
     .three-col {
@@ -504,7 +504,7 @@
       grid-template-columns: repeat(3,minmax(0,1fr));
       gap: 10px;
       margin-bottom: 10px;
-      max-width: 920px;
+      width: 100%;
     }
 
     .four-col {
@@ -512,11 +512,11 @@
       grid-template-columns: repeat(4,minmax(0,1fr));
       gap: 10px;
       margin-bottom: 10px;
-      max-width: 980px;
+      width: 100%;
     }
 
     .diagram {
-      max-width: 900px;
+      width: 100%;
       min-height: 128px;
       display: grid;
       grid-template-columns: 1fr 34px 1fr 34px 1fr;
@@ -638,6 +638,13 @@
       color: #d9ffe8;
       font-size: 10px;
       line-height: 1.45;
+    }
+
+
+    .security-level {
+      font-size: clamp(17px,1.35vw,22px) !important;
+      letter-spacing: -.035em;
+      line-height: 1.05;
     }
 
     .hidden {
@@ -926,7 +933,7 @@
         <!-- SECURITATE -->
         <section id="page-securitate" class="page hidden">
           <section class="three-col">
-            <div class="card"><h3>Nivel securitate</h3><div class="big-value" id="nivel">--</div></div>
+            <div class="card"><h3>Nivel securitate</h3><div class="big-value security-level" id="nivel">--</div></div>
             <div class="card"><h3>Alarmă</h3><div class="big-text" id="alarmaPage">--</div><div class="card-note">Buzzer + LED alarmă.</div></div>
             <div class="card"><h3>Blocare temporară</h3><div class="big-text" id="blocat">--</div><div class="card-note">După accesări greșite.</div></div>
           </section>
