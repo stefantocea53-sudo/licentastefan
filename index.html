@@ -642,9 +642,10 @@
 
 
     .security-level {
-      font-size: clamp(17px,1.35vw,22px) !important;
-      letter-spacing: -.035em;
-      line-height: 1.05;
+      font-size: clamp(14px,1.05vw,18px) !important;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      text-transform: none;
     }
 
     body.not-dashboard .three-col .card,
@@ -691,6 +692,14 @@
 
     body.not-dashboard .page:not(.hidden) {
       margin-top: 0;
+    }
+
+
+    #nivel {
+      font-size: clamp(14px,1.05vw,18px) !important;
+      letter-spacing: -.02em !important;
+      line-height: 1.1 !important;
+      text-transform: none !important;
     }
 
     .hidden {
@@ -1336,13 +1345,13 @@
       const nivel = document.getElementById("nivel");
       if (nivel) {
         if (alarmActive || blocked) {
-          nivel.textContent = "CRITIC";
+          nivel.textContent = "Critic";
           nivel.className = "big-value bad";
         } else if (pir1Active || pir2Active) {
-          nivel.textContent = "RIDICAT";
+          nivel.textContent = "Ridicat";
           nivel.className = "big-value warn";
         } else {
-          nivel.textContent = "NORMAL";
+          nivel.textContent = "Normal";
           nivel.className = "big-value ok";
         }
       }
