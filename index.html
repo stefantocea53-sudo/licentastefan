@@ -647,6 +647,16 @@
       line-height: 1.05;
     }
 
+
+    body.not-dashboard .top-panel {
+      margin-top: 38px;
+      margin-bottom: 24px;
+    }
+
+    body.not-dashboard .page:not(.hidden) {
+      margin-top: 10px;
+    }
+
     .hidden {
       display: none;
     }
@@ -1051,6 +1061,8 @@
 
       const topPanel = document.getElementById("topPanel");
       const timerPanel = document.getElementById("dashboardTimerPanel");
+
+      document.body.classList.toggle("not-dashboard", page !== "dashboard");
 
       if (page === "dashboard") {
         topPanel.classList.remove("single");
