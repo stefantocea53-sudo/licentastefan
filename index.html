@@ -702,6 +702,74 @@
       text-transform: none !important;
     }
 
+
+    .security-control {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      min-height: 88px;
+    }
+
+    .security-control h3 {
+      margin-bottom: 8px;
+    }
+
+    .security-control-title {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    .security-control-text {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .security-btn {
+      min-width: 178px;
+      min-height: 46px;
+      border-radius: 15px;
+      border: 1px solid rgba(106,255,170,.22);
+      background: linear-gradient(135deg, rgba(106,255,170,.18), rgba(106,255,170,.055));
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .security-btn:hover {
+      filter: brightness(1.08);
+      border-color: rgba(106,255,170,.40);
+    }
+
+    .security-btn.armed {
+      color: #07100b;
+      border-color: rgba(255,209,102,.45);
+      background: linear-gradient(135deg, var(--yellow), #ffb547);
+      box-shadow: 0 0 24px rgba(255,209,102,.13);
+    }
+
+    .security-mode-pill {
+      width: max-content;
+      margin-top: 8px;
+    }
+
+    @media(max-width:820px) {
+      .security-control {
+        grid-template-columns: 1fr;
+      }
+
+      .security-btn {
+        width: 100%;
+      }
+    }
+
     .hidden {
       display: none;
     }
@@ -917,6 +985,21 @@
             </div>
           </section>
 
+          <section class="card security-control">
+            <div>
+              <h3>Mod securitate</h3>
+              <div class="security-control-title" id="securityModeTitle">Sistem în mod normal</div>
+              <div class="security-control-text" id="securityModeText">
+                Alarma nu pornește la mișcare interioară. Apasă pentru modul de securitate ridicat.
+              </div>
+              <div class="pill security-mode-pill" id="securityModePill">Stare: Normală</div>
+            </div>
+
+            <button class="security-btn" id="securityModeBtn" onclick="toggleSecurityMode()">
+              Activează securitate ridicată
+            </button>
+          </section>
+
           <section class="card">
             <div class="section-title">Diagramă acces</div>
             <div class="diagram">
@@ -1030,7 +1113,8 @@
               <table class="table">
                 <tr><td>Broker</td><td>broker.emqx.io</td></tr>
                 <tr><td>WebSocket</td><td>wss://broker.emqx.io:8084/mqtt</td></tr>
-                <tr><td>Topic</td><td>licenta/stefan/secureaccess/status</td></tr>
+                <tr><td>Topic status</td><td>licenta/stefan/secureaccess/status</td></tr>
+                <tr><td>Topic comenzi</td><td>licenta/stefan/secureaccess/comanda</td></tr>
                 <tr><td>MQTT</td><td id="mqttTable">--</td></tr>
                 <tr><td>ESP32</td><td id="espTable">--</td></tr>
                 <tr><td>Uptime Arduino</td><td id="uptime2">--</td></tr>
@@ -1059,6 +1143,12 @@
     let doorTimerInterval = null;
     let lastDoorOpen = false;
     let lastAccessState = "";
+
+    let securityHighMode = false;
+    let siteAlarmActive = false;
+    let lastInteriorMotion = false;
+
+    const MQTT_CONTROL_TOPIC = "licenta/stefan/secureaccess/comanda";
 
     let stats = {
       totalPermise: 0,
@@ -1192,6 +1282,56 @@
       }, 1000);
     }
 
+
+    function publishSecurityCommand(mode) {
+      if (!client || !client.connected) return;
+
+      const payload = {
+        comanda: "securityMode",
+        mod: mode,
+        alarmaReset: mode === "normal",
+        timestamp: new Date().toISOString()
+      };
+
+      client.publish(MQTT_CONTROL_TOPIC, JSON.stringify(payload), { qos: 0, retain: false });
+    }
+
+    function refreshSecurityButton() {
+      const btn = document.getElementById("securityModeBtn");
+      const title = document.getElementById("securityModeTitle");
+      const text = document.getElementById("securityModeText");
+      const pill = document.getElementById("securityModePill");
+
+      if (!btn || !title || !text || !pill) return;
+
+      if (securityHighMode) {
+        btn.textContent = "Dezactivează modul ridicat";
+        btn.classList.add("armed");
+        title.textContent = "Sistem în securitate ridicată";
+        text.textContent = "Alarma pornește doar dacă este detectată mișcare în interiorul clădirii.";
+        pill.textContent = siteAlarmActive ? "Stare: Critică" : "Stare: Ridicată";
+        pill.className = siteAlarmActive ? "pill bad security-mode-pill" : "pill warn security-mode-pill";
+      } else {
+        btn.textContent = "Activează securitate ridicată";
+        btn.classList.remove("armed");
+        title.textContent = "Sistem în mod normal";
+        text.textContent = "Alarma nu pornește la mișcare interioară. Apasă pentru modul de securitate ridicat.";
+        pill.textContent = "Stare: Normală";
+        pill.className = "pill ok security-mode-pill";
+      }
+    }
+
+    function toggleSecurityMode() {
+      securityHighMode = !securityHighMode;
+
+      if (!securityHighMode) {
+        siteAlarmActive = false;
+      }
+
+      publishSecurityCommand(securityHighMode ? "ridicat" : "normal");
+      refreshSecurityButton();
+    }
+
     function updateMqttVisual(state, text) {
       setText("mqttTable", text);
     }
@@ -1276,7 +1416,14 @@
       const doorOpen = isDoorOpen(d.usa);
       const pir1Active = isOne(d.pir1);
       const pir2Active = isOne(d.pir2);
-      const alarmActive = isOne(d.alarma);
+
+      if (securityHighMode && pir2Active && !lastInteriorMotion) {
+        siteAlarmActive = true;
+      }
+
+      lastInteriorMotion = pir2Active;
+
+      const alarmActive = siteAlarmActive;
       const blocked = isOne(d.blocat);
 
       const doorLabel = doorOpen ? "Deschisă" : "Închisă";
@@ -1344,17 +1491,19 @@
 
       const nivel = document.getElementById("nivel");
       if (nivel) {
-        if (alarmActive || blocked) {
+        if (alarmActive) {
           nivel.textContent = "Critic";
-          nivel.className = "big-value bad";
-        } else if (pir1Active || pir2Active) {
+          nivel.className = "big-value security-level bad";
+        } else if (securityHighMode) {
           nivel.textContent = "Ridicat";
-          nivel.className = "big-value warn";
+          nivel.className = "big-value security-level warn";
         } else {
           nivel.textContent = "Normal";
-          nivel.className = "big-value ok";
+          nivel.className = "big-value security-level ok";
         }
       }
+
+      refreshSecurityButton();
 
       updateZones("Dash", pir1Active, pir2Active, doorOpen, alarmActive);
       updateZones("Pir", pir1Active, pir2Active, doorOpen, alarmActive);
@@ -1424,6 +1573,7 @@
     }, 1000);
 
     updateTimerVisual();
+    refreshSecurityButton();
     connectMQTT();
   </script>
 </body>
