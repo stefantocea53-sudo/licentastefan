@@ -13,9 +13,8 @@
       --bg2: #07100b;
       --side: #050807;
       --card: #0b1110;
-      --card2: #0f1815;
       --line: rgba(255,255,255,.08);
-      --line2: rgba(106,255,170,.28);
+      --line2: rgba(106,255,170,.22);
       --text: #f3fff7;
       --muted: #8da195;
       --green: #6affaa;
@@ -23,7 +22,7 @@
       --red: #ff4d6d;
       --yellow: #ffd166;
       --blue: #69b7ff;
-      --shadow: 0 18px 50px rgba(0,0,0,.36);
+      --shadow: 0 12px 28px rgba(0,0,0,.28);
     }
 
     * {
@@ -37,9 +36,10 @@
       color: var(--text);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       background:
-        radial-gradient(circle at 20% 0%, rgba(106,255,170,.16), transparent 30%),
-        radial-gradient(circle at 90% 10%, rgba(255,77,109,.08), transparent 24%),
+        radial-gradient(circle at 20% 0%, rgba(106,255,170,.11), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(255,77,109,.05), transparent 24%),
         linear-gradient(135deg, var(--bg), var(--bg2));
+      font-size: 12px;
     }
 
     body::before {
@@ -48,152 +48,155 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-      background-size: 34px 34px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.16));
+        linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.06));
     }
 
     .app {
       display: flex;
       min-height: 100vh;
+      position: relative;
+      z-index: 1;
     }
 
     .sidebar {
-      width: 292px;
+      width: 226px;
       position: fixed;
       inset: 0 auto 0 0;
       z-index: 30;
-      padding: 24px 20px;
+      padding: 14px 12px;
       background: linear-gradient(180deg, rgba(5,8,7,.98), rgba(3,5,4,.98));
       border-right: 1px solid var(--line);
-      box-shadow: 20px 0 60px rgba(0,0,0,.34);
+      box-shadow: 14px 0 36px rgba(0,0,0,.24);
       transition: .24s ease;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 30px;
+      gap: 9px;
+      margin-bottom: 18px;
     }
 
     .brand-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
       display: grid;
       place-items: center;
       background: linear-gradient(135deg, #6affaa, #1fc878);
       color: #031108;
-      font-size: 22px;
+      font-size: 15px;
       font-weight: 950;
-      box-shadow: 0 0 30px rgba(106,255,170,.22);
+      box-shadow: 0 0 20px rgba(106,255,170,.16);
     }
 
     .brand-title {
-      font-size: 23px;
+      font-size: 17px;
       font-weight: 900;
-      letter-spacing: -.05em;
+      letter-spacing: -.045em;
+      line-height: 1;
     }
 
     .brand-subtitle {
-      margin-top: 4px;
+      margin-top: 3px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 10px;
       font-weight: 500;
     }
 
     .nav-title {
-      margin: 18px 0 12px;
+      margin: 12px 0 8px;
       color: #65776d;
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 9px;
+      font-weight: 850;
       text-transform: uppercase;
-      letter-spacing: .18em;
+      letter-spacing: .16em;
     }
 
     .nav {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 5px;
     }
 
     .nav a {
-      height: 58px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       text-decoration: none;
       color: #dcece2;
-      padding: 0 14px;
-      border-radius: 18px;
+      padding: 0 9px;
+      border-radius: 13px;
       border: 1px solid transparent;
       transition: .18s ease;
-      font-size: 15px;
-      font-weight: 750;
+      font-size: 12px;
+      font-weight: 740;
       cursor: pointer;
     }
 
     .nav a:hover,
     .nav a.active {
-      background: linear-gradient(135deg, rgba(106,255,170,.15), rgba(106,255,170,.04));
-      border-color: rgba(106,255,170,.25);
+      background: linear-gradient(135deg, rgba(106,255,170,.13), rgba(106,255,170,.03));
+      border-color: rgba(106,255,170,.22);
       color: white;
     }
 
     .nav-icon {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
 
     .glyph {
-      width: 36px;
-      height: 36px;
-      border-radius: 13px;
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
       display: grid;
       place-items: center;
       background: rgba(255,255,255,.045);
       color: var(--green);
-      font-size: 14px;
+      font-size: 11px;
       font-weight: 900;
     }
 
     .nav-dot {
-      width: 9px;
-      height: 9px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--green);
-      opacity: .75;
+      opacity: .6;
     }
 
     .side-status {
-      margin-top: 24px;
-      padding: 16px;
+      margin-top: 16px;
+      padding: 10px;
       border: 1px solid var(--line);
-      border-radius: 20px;
-      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      background: rgba(255,255,255,.022);
     }
 
     .side-status h4 {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
+      font-size: 9px;
+      font-weight: 850;
       text-transform: uppercase;
       letter-spacing: .12em;
     }
 
     .main {
-      width: calc(100% - 292px);
-      margin-left: 292px;
-      padding: 24px;
+      width: calc(100% - 226px);
+      margin-left: 226px;
+      padding: 14px;
     }
 
     .content {
       width: 100%;
-      max-width: 1320px;
+      max-width: 1180px;
       margin: 0 auto;
     }
 
@@ -204,19 +207,20 @@
       z-index: 20;
       justify-content: space-between;
       align-items: center;
-      padding: 12px;
-      margin-bottom: 16px;
+      padding: 9px;
+      margin-bottom: 10px;
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 14px;
       background: rgba(3,5,4,.88);
       backdrop-filter: blur(12px);
     }
 
     button {
       border: 0;
-      border-radius: 14px;
+      border-radius: 11px;
       cursor: pointer;
-      padding: 11px 15px;
+      padding: 8px 11px;
+      font-size: 11px;
       font-weight: 850;
     }
 
@@ -227,29 +231,38 @@
 
     .close-btn {
       display: none;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.06);
       color: var(--text);
     }
 
-    .hero {
+    .top-panel {
       display: grid;
-      grid-template-columns: minmax(0,1.3fr) 420px;
-      gap: 18px;
-      align-items: stretch;
-      margin-bottom: 18px;
+      grid-template-columns: 1.45fr .55fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .top-panel.single {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-card,
+    .timer-panel,
+    .card {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.032), rgba(255,255,255,.011)),
+        rgba(11,17,16,.82);
+      box-shadow: var(--shadow);
     }
 
     .hero-card {
-      min-height: 210px;
-      border: 1px solid var(--line2);
-      border-radius: 32px;
-      padding: 30px;
-      background:
-        linear-gradient(135deg, rgba(106,255,170,.12), rgba(255,255,255,.02)),
-        rgba(11,17,16,.88);
-      box-shadow: var(--shadow);
+      min-height: 96px;
+      border-radius: 18px;
+      padding: 14px;
+      border-color: var(--line2);
       position: relative;
       overflow: hidden;
     }
@@ -257,12 +270,12 @@
     .hero-card::after {
       content: "";
       position: absolute;
-      right: -90px;
-      top: -90px;
-      width: 280px;
-      height: 280px;
+      right: -62px;
+      top: -84px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
-      border: 44px solid rgba(106,255,170,.045);
+      border: 30px solid rgba(106,255,170,.04);
     }
 
     .hero-inner {
@@ -274,103 +287,355 @@
       width: max-content;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 13px;
-      margin-bottom: 16px;
-      border: 1px solid rgba(106,255,170,.26);
+      gap: 6px;
+      padding: 5px 8px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(106,255,170,.23);
       border-radius: 999px;
-      background: rgba(106,255,170,.08);
+      background: rgba(106,255,170,.065);
       color: #dcffe9;
-      font-size: 14px;
-      font-weight: 750;
+      font-size: 10px;
+      font-weight: 780;
     }
 
     .live-dot {
-      width: 10px;
-      height: 10px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 14px var(--green);
+      box-shadow: 0 0 10px var(--green);
     }
 
     h1 {
-      font-size: clamp(35px,4vw,58px);
+      font-size: clamp(23px,2.8vw,34px);
       line-height: 1.02;
-      letter-spacing: -.065em;
+      letter-spacing: -.06em;
       font-weight: 950;
     }
 
     .head-sub {
       max-width: 760px;
-      margin-top: 12px;
+      margin-top: 6px;
       color: var(--muted);
-      font-size: 17px;
+      font-size: 11px;
       font-weight: 500;
-      line-height: 1.55;
+      line-height: 1.4;
     }
 
-    .hero-status {
-      min-height: 210px;
-      border: 1px solid var(--line);
-      border-radius: 32px;
-      padding: 22px;
-      background: rgba(11,17,16,.86);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .hero-status-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
-    }
-
-    .hero-status-title h3 {
-      font-size: 13px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .14em;
-    }
-
-    .mqtt-box {
-      flex: 1;
+    .timer-panel {
+      min-height: 96px;
+      border-radius: 18px;
+      padding: 12px;
       display: grid;
-      gap: 12px;
-      padding: 16px;
-      border-radius: 24px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
+      grid-template-columns: 88px 1fr;
+      align-items: center;
+      gap: 11px;
     }
 
-    .mqtt-large {
-      font-size: 32px;
+    .timer-ring {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background:
+        conic-gradient(var(--green) var(--timerDeg,0deg), rgba(255,255,255,.08) 0deg),
+        rgba(255,255,255,.03);
+    }
+
+    .timer-ring::after {
+      content: "";
+      position: absolute;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .timer-value {
+      position: relative;
+      z-index: 1;
+      font-size: 27px;
       font-weight: 950;
-      letter-spacing: -.05em;
+      letter-spacing: -.06em;
+    }
+
+    .timer-panel h3,
+    .section-title,
+    .card h3 {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .timer-panel strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 16px;
+      letter-spacing: -.04em;
+    }
+
+    .timer-panel p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
     }
 
     .pill-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .pill {
-      min-height: 44px;
-      display: flex;
+      min-height: 28px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 10px 12px;
+      gap: 6px;
+      padding: 0 9px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255,255,255,.035);
+      background: rgba(255,255,255,.03);
       color: #e7f5ec;
-      font-size: 13px;
-      font-weight: 750;
+      font-size: 10px;
+      font-weight: 760;
       text-align: center;
+      white-space: nowrap;
+    }
+
+    .pill.ok {
+      color: var(--green);
+      border-color: rgba(106,255,170,.22);
+      background: rgba(106,255,170,.065);
+    }
+
+    .pill.bad {
+      color: #ffc4cf;
+      border-color: rgba(255,77,109,.23);
+      background: rgba(255,77,109,.065);
+    }
+
+    .pill.warn {
+      color: #ffe8a7;
+      border-color: rgba(255,209,102,.22);
+      background: rgba(255,209,102,.065);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      border-radius: 17px;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .metric {
+      min-height: 104px;
+    }
+
+    .metric-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .icon-bubble {
+      width: 31px;
+      height: 31px;
+      flex: 0 0 31px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(106,255,170,.16);
+      background: rgba(106,255,170,.065);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .big-text {
+      margin-top: 10px;
+      font-size: clamp(17px,1.7vw,25px);
+      line-height: 1.02;
+      letter-spacing: -.05em;
+      font-weight: 950;
+      min-height: 26px;
+    }
+
+    .big-value {
+      margin-top: 8px;
+      font-size: clamp(23px,2.3vw,36px);
+      line-height: 1;
+      letter-spacing: -.065em;
+      font-weight: 950;
+    }
+
+    .card-note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.34;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0,1.1fr) minmax(270px,.9fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .four-col {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .diagram {
+      min-height: 128px;
+      display: grid;
+      grid-template-columns: 1fr 34px 1fr 34px 1fr;
+      align-items: center;
+      gap: 6px;
+      padding: 9px;
+      margin-top: 9px;
+      border-radius: 15px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px),
+        rgba(0,0,0,.12);
+      background-size: 22px 22px;
+    }
+
+    .zone {
+      height: 88px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(5,8,7,.62);
+      transition: .18s ease;
+    }
+
+    .zone.active {
+      border-color: rgba(106,255,170,.40);
+      box-shadow: 0 0 18px rgba(106,255,170,.09);
+    }
+
+    .zone.alarm {
+      border-color: rgba(255,77,109,.46);
+      box-shadow: 0 0 18px rgba(255,77,109,.10);
+    }
+
+    .zone-icon {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 6px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(106,255,170,.16);
+      border-radius: 12px;
+      background: rgba(106,255,170,.06);
+      font-size: 17px;
+    }
+
+    .zone b {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: -.035em;
+    }
+
+    .zone span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .event {
+      padding: 8px 9px;
+      margin-bottom: 6px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: rgba(255,255,255,.025);
+      color: #eaf8ef;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.38;
+    }
+
+    .events-list {
+      margin-top: 9px;
+      max-height: 260px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 7px;
+    }
+
+    .table td {
+      padding: 8px 4px;
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      line-height: 1.34;
+    }
+
+    .table td:first-child {
+      width: 140px;
+      color: var(--muted);
+      font-weight: 740;
+    }
+
+    .raw-json {
+      margin-top: 8px;
+      max-height: 230px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #030504;
+      color: #d9ffe8;
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    .hidden {
+      display: none;
     }
 
     .ok { color: var(--green); }
@@ -378,237 +643,6 @@
     .warn { color: var(--yellow); }
     .blue { color: var(--blue); }
     .muted { color: var(--muted); }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(4,minmax(0,1fr));
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 22px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)),
-        rgba(11,17,16,.84);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0% 0%, rgba(106,255,170,.07), transparent 34%);
-      pointer-events: none;
-    }
-
-    .card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .metric {
-      min-height: 166px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .metric-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .card h3 {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 850;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .icon-bubble {
-      width: 46px;
-      height: 46px;
-      flex: 0 0 46px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(106,255,170,.18);
-      background: rgba(106,255,170,.075);
-      color: var(--green);
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .big-text {
-      margin-top: 18px;
-      font-size: clamp(28px,3.1vw,42px);
-      line-height: 1.02;
-      letter-spacing: -.065em;
-      font-weight: 950;
-      min-height: 50px;
-    }
-
-    .big-value {
-      margin-top: 14px;
-      font-size: clamp(42px,5vw,66px);
-      line-height: 1;
-      letter-spacing: -.08em;
-      font-weight: 950;
-    }
-
-    .card-note {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin: 22px 0 12px;
-    }
-
-    .section-head h2 {
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: -.05em;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: minmax(0,1.25fr) minmax(320px,.75fr);
-      gap: 18px;
-    }
-
-    .three-col {
-      display: grid;
-      grid-template-columns: repeat(3,minmax(0,1fr));
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .diagram {
-      min-height: 300px;
-      display: grid;
-      grid-template-columns: 1fr 70px 1fr 70px 1fr;
-      align-items: center;
-      gap: 10px;
-      padding: 18px;
-      border-radius: 24px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
-        rgba(0,0,0,.16);
-      background-size: 28px 28px;
-    }
-
-    .zone {
-      height: 188px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background: rgba(5,8,7,.76);
-      transition: .18s ease;
-    }
-
-    .zone.active {
-      border-color: rgba(106,255,170,.48);
-      box-shadow: 0 0 30px rgba(106,255,170,.12);
-    }
-
-    .zone.alarm {
-      border-color: rgba(255,77,109,.55);
-      box-shadow: 0 0 30px rgba(255,77,109,.13);
-    }
-
-    .zone-icon {
-      width: 68px;
-      height: 68px;
-      margin: 0 auto 14px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(106,255,170,.18);
-      border-radius: 22px;
-      background: rgba(106,255,170,.075);
-      font-size: 30px;
-    }
-
-    .zone b {
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: -.04em;
-    }
-
-    .arrow {
-      display: grid;
-      place-items: center;
-      color: var(--green);
-      font-size: 42px;
-      font-weight: 950;
-    }
-
-    .event {
-      padding: 14px 15px;
-      margin-bottom: 10px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(255,255,255,.03);
-      color: #eaf8ef;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-    }
-
-    .table td {
-      padding: 14px 4px;
-      border-bottom: 1px solid var(--line);
-      font-size: 14px;
-    }
-
-    .table td:first-child {
-      width: 190px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .raw-json {
-      margin-top: 12px;
-      max-height: 330px;
-      overflow: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: #030504;
-      color: #d9ffe8;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .hidden {
-      display: none;
-    }
 
     .overlay {
       display: none;
@@ -618,22 +652,15 @@
       background: rgba(0,0,0,.72);
     }
 
-    @media(max-width:1180px) {
-      .hero {
+    @media(max-width:1080px) {
+      .top-panel,
+      .two-col {
         grid-template-columns: 1fr;
       }
 
-      .hero-status {
-        min-height: auto;
-      }
-
-      .metrics {
+      .metrics,
+      .four-col {
         grid-template-columns: repeat(2,minmax(0,1fr));
-      }
-
-      .two-col,
-      .three-col {
-        grid-template-columns: 1fr;
       }
     }
 
@@ -653,7 +680,7 @@
       .main {
         width: 100%;
         margin-left: 0;
-        padding: 14px;
+        padding: 10px;
       }
 
       .mobile-topbar {
@@ -664,18 +691,20 @@
         display: block;
       }
 
-      .metrics {
+      .metrics,
+      .three-col,
+      .four-col {
         grid-template-columns: 1fr;
       }
 
       .hero-card,
-      .hero-status,
+      .timer-panel,
       .card {
-        border-radius: 22px;
+        border-radius: 16px;
       }
 
-      .pill-row {
-        grid-template-columns: 1fr;
+      .timer-panel {
+        grid-template-columns: 82px 1fr;
       }
 
       .diagram {
@@ -684,11 +713,11 @@
 
       .arrow {
         transform: rotate(90deg);
-        margin: 4px 0;
+        margin: 1px 0;
       }
 
       .zone {
-        height: 150px;
+        height: 84px;
       }
     }
   </style>
@@ -705,7 +734,7 @@
         <div class="brand-icon">SA</div>
         <div>
           <div class="brand-title">SecureAccess</div>
-          <div class="brand-subtitle">Monitorizare și control acces</div>
+          <div class="brand-subtitle">MQTT dashboard</div>
         </div>
       </div>
 
@@ -745,9 +774,9 @@
 
       <div class="side-status">
         <h4>Status rapid</h4>
-        <div class="pill" id="mqttSideStatus">MQTT: --</div>
-        <br><br>
         <div class="pill" id="espSideStatus">ESP32: --</div>
+        <br><br>
+        <div class="pill" id="lastUpdateSide">Update: --</div>
       </div>
     </aside>
 
@@ -758,185 +787,181 @@
           <button class="menu-btn" onclick="toggleMenu(true)">Meniu</button>
         </div>
 
-        <section class="hero">
+        <section class="top-panel" id="topPanel">
           <div class="hero-card">
             <div class="hero-inner">
-              <div class="eyebrow"><span class="live-dot"></span>Date live prin MQTT</div>
+              <div class="eyebrow"><span class="live-dot"></span>Date live</div>
               <h1 id="pageTitle">Panou principal</h1>
               <div class="head-sub" id="pageSubtitle">
-                Dashboard online pentru ușă, RFID, senzori PIR, alarmă și evenimente de securitate.
+                Monitorizare compactă pentru ușă, RFID, senzori PIR și alarmă.
               </div>
             </div>
           </div>
 
-          <div class="hero-status">
-            <div class="hero-status-title">
-              <h3>Conexiune MQTT</h3>
-              <span class="pill ok">EMQX Broker</span>
+          <div class="timer-panel" id="dashboardTimerPanel">
+            <div class="timer-ring" id="timerRing">
+              <div class="timer-value" id="doorTimerValue">0</div>
             </div>
 
-            <div class="mqtt-box">
-              <div>
-                <div class="mqtt-large" id="mqttMainStatus">Se conectează...</div>
-                <div class="card-note">Topic: <span id="topicText">licenta/stefan/secureaccess/status</span></div>
-              </div>
-
-              <div class="pill-row">
-                <div class="pill" id="mqttStatus">MQTT: --</div>
-                <div class="pill" id="lastUpdate">Update: --</div>
-                <div class="pill" id="lastMessage">Mesaje: 0</div>
-                <div class="pill" id="espStatus">ESP32: --</div>
-              </div>
+            <div>
+              <h3>Timer ușă</h3>
+              <strong id="doorTimerTitle">Inactiv</strong>
+              <p id="doorTimerText">Se activează 5 secunde după acces permis.</p>
             </div>
           </div>
         </section>
 
+        <!-- DASHBOARD -->
         <section id="page-dashboard" class="page">
           <section class="metrics">
             <div class="card metric">
-              <div class="card-inner">
-                <div class="metric-top"><h3>Ușă / Servo</h3><div class="icon-bubble">▰</div></div>
-                <div class="big-text" id="usaBox">--</div>
-                <div class="card-note">Stare ușă controlată de servomotor.</div>
-              </div>
+              <div class="metric-top"><h3>Ușă / Servo</h3><div class="icon-bubble">▰</div></div>
+              <div class="big-text" id="usaBox">--</div>
+              <div class="card-note">Stare ușă controlată de SG90.</div>
             </div>
 
             <div class="card metric">
-              <div class="card-inner">
-                <div class="metric-top"><h3>RFID</h3><div class="icon-bubble">◉</div></div>
-                <div class="big-text" id="accesBox">--</div>
-                <div class="card-note">Ultimul UID: <span id="rfid">--</span></div>
-              </div>
+              <div class="metric-top"><h3>RFID</h3><div class="icon-bubble">◉</div></div>
+              <div class="big-text" id="accesBox">--</div>
+              <div class="card-note">UID: <span id="rfid">--</span></div>
             </div>
 
             <div class="card metric">
-              <div class="card-inner">
-                <div class="metric-top"><h3>Senzori PIR</h3><div class="icon-bubble">◎</div></div>
-                <div class="big-text" id="pirBox">--</div>
-                <div class="card-note">Exterior și interior monitorizate.</div>
-              </div>
+              <div class="metric-top"><h3>PIR</h3><div class="icon-bubble">◎</div></div>
+              <div class="big-text" id="pirBox">--</div>
+              <div class="card-note">Exterior + hol interior.</div>
             </div>
 
             <div class="card metric">
-              <div class="card-inner">
-                <div class="metric-top"><h3>Alarmă</h3><div class="icon-bubble">!</div></div>
-                <div class="big-text" id="alarmaBox">--</div>
-                <div class="card-note">Avertizare pentru evenimente suspecte.</div>
-              </div>
+              <div class="metric-top"><h3>Alarmă</h3><div class="icon-bubble">!</div></div>
+              <div class="big-text" id="alarmaBox">--</div>
+              <div class="card-note">Blocare: <span id="blockedDash">--</span></div>
             </div>
           </section>
 
-          <div class="section-head"><h2>Diagramă acces</h2></div>
-
           <section class="card">
-            <div class="card-inner">
-              <div class="diagram">
-                <div class="zone" id="zoneExterior">
-                  <div><div class="zone-icon">🚶</div><b>Exterior</b></div>
-                </div>
-                <div class="arrow">→</div>
-                <div class="zone" id="zoneUsa">
-                  <div><div class="zone-icon">🚪</div><b>Ușă</b></div>
-                </div>
-                <div class="arrow">→</div>
-                <div class="zone" id="zoneInterior">
-                  <div><div class="zone-icon">🏢</div><b>Hol interior</b></div>
-                </div>
+            <div class="section-title">Diagramă acces</div>
+            <div class="diagram">
+              <div class="zone" id="zoneExteriorDash">
+                <div><div class="zone-icon">🚶</div><b>Exterior</b><span>PIR 1</span></div>
               </div>
-            </div>
-          </section>
 
-          <div class="section-head"><h2>Evenimente recente</h2></div>
+              <div class="arrow">→</div>
 
-          <section class="card">
-            <div class="card-inner" id="eventsDashboard">
-              <div class="event">Aștept date MQTT...</div>
+              <div class="zone" id="zoneUsaDash">
+                <div><div class="zone-icon">🚪</div><b>Ușă</b><span>RFID + Servo</span></div>
+              </div>
+
+              <div class="arrow">→</div>
+
+              <div class="zone" id="zoneInteriorDash">
+                <div><div class="zone-icon">🏢</div><b>Hol</b><span>PIR 2</span></div>
+              </div>
             </div>
           </section>
         </section>
 
+        <!-- ACCES -->
         <section id="page-acces" class="page hidden">
           <section class="three-col">
-            <div class="card"><div class="card-inner"><h3>Ultimul UID</h3><div class="big-text" id="rfidPage">--</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Status acces</h3><div class="big-text" id="accesPage">--</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Stare ușă</h3><div class="big-text" id="usaPage">--</div></div></div>
+            <div class="card"><h3>Ultimul UID</h3><div class="big-text" id="rfidPage">--</div><div class="card-note">Card / tag RFID citit.</div></div>
+            <div class="card"><h3>Status acces</h3><div class="big-text" id="accesPage">--</div><div class="card-note">Autorizare curentă.</div></div>
+            <div class="card"><h3>Stare ușă</h3><div class="big-text" id="usaPage">--</div><div class="card-note">Servo 0° / 90°.</div></div>
           </section>
 
           <section class="three-col">
-            <div class="card"><div class="card-inner"><h3>Accesări permise</h3><div class="big-value ok" id="totalPermise">0</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Accesări respinse</h3><div class="big-value bad" id="totalRespinse">0</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Ultimul eveniment</h3><div class="big-text" id="ultimulEvenimentAcces">--</div></div></div>
+            <div class="card"><h3>Acces permis</h3><div class="big-value ok" id="totalPermise">0</div></div>
+            <div class="card"><h3>Acces respins</h3><div class="big-value bad" id="totalRespinse">0</div></div>
+            <div class="card"><h3>Ultimul eveniment</h3><div class="big-text" id="ultimulEvenimentAcces">--</div></div>
           </section>
         </section>
 
+        <!-- SENZORI -->
         <section id="page-senzori" class="page hidden">
-          <section class="three-col">
-            <div class="card"><div class="card-inner"><h3>PIR exterior</h3><div class="big-text" id="pir1">--</div></div></div>
-            <div class="card"><div class="card-inner"><h3>PIR interior</h3><div class="big-text" id="pir2">--</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Mișcări totale</h3><div class="big-value warn" id="totalMiscari">0</div></div></div>
+          <section class="four-col">
+            <div class="card"><h3>PIR exterior</h3><div class="big-text" id="pir1">--</div><div class="card-note">Senzor montat în exterior.</div></div>
+            <div class="card"><h3>PIR interior</h3><div class="big-text" id="pir2">--</div><div class="card-note">Senzor montat în hol.</div></div>
+            <div class="card"><h3>Mișcări exterior</h3><div class="big-value warn" id="totalMiscariExterior">0</div></div>
+            <div class="card"><h3>Mișcări interior</h3><div class="big-value warn" id="totalMiscariInterior">0</div></div>
+          </section>
+
+          <section class="card">
+            <div class="section-title">Zone monitorizate</div>
+            <div class="diagram">
+              <div class="zone" id="zoneExteriorPir">
+                <div><div class="zone-icon">🚶</div><b>Exterior</b><span>PIR 1</span></div>
+              </div>
+
+              <div class="arrow">→</div>
+
+              <div class="zone" id="zoneUsaPir">
+                <div><div class="zone-icon">🚪</div><b>Ușă</b><span>Acces</span></div>
+              </div>
+
+              <div class="arrow">→</div>
+
+              <div class="zone" id="zoneInteriorPir">
+                <div><div class="zone-icon">🏢</div><b>Hol</b><span>PIR 2</span></div>
+              </div>
+            </div>
           </section>
         </section>
 
+        <!-- SECURITATE -->
         <section id="page-securitate" class="page hidden">
           <section class="three-col">
-            <div class="card"><div class="card-inner"><h3>Nivel securitate</h3><div class="big-value" id="nivel">--</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Alarmă</h3><div class="big-text" id="alarmaPage">--</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Blocare</h3><div class="big-text" id="blocat">--</div></div></div>
+            <div class="card"><h3>Nivel securitate</h3><div class="big-value" id="nivel">--</div></div>
+            <div class="card"><h3>Alarmă</h3><div class="big-text" id="alarmaPage">--</div><div class="card-note">Buzzer + LED alarmă.</div></div>
+            <div class="card"><h3>Blocare temporară</h3><div class="big-text" id="blocat">--</div><div class="card-note">După accesări greșite.</div></div>
           </section>
 
           <section class="three-col">
-            <div class="card"><div class="card-inner"><h3>Alarme declanșate</h3><div class="big-value bad" id="totalAlarme">0</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Acces respins</h3><div class="big-value bad" id="totalRespinse2">0</div></div></div>
-            <div class="card"><div class="card-inner"><h3>Ultimul eveniment</h3><div class="big-text" id="ultimulEvenimentSec">--</div></div></div>
+            <div class="card"><h3>Alarme declanșate</h3><div class="big-value bad" id="totalAlarme">0</div></div>
+            <div class="card"><h3>Acces respins</h3><div class="big-value bad" id="totalRespinse2">0</div></div>
+            <div class="card"><h3>Ultimul eveniment</h3><div class="big-text" id="ultimulEvenimentSec">--</div></div>
           </section>
         </section>
 
+        <!-- ISTORIC -->
         <section id="page-istoric" class="page hidden">
           <section class="two-col">
             <div class="card">
-              <div class="card-inner">
-                <h3>Evenimente live MQTT</h3>
-                <div style="margin-top:14px" id="eventsHistory">
-                  <div class="event">Aștept date MQTT...</div>
-                </div>
+              <h3>Evenimente live</h3>
+              <div class="events-list" id="eventsHistory">
+                <div class="event">Aștept date...</div>
               </div>
             </div>
 
             <div class="card">
-              <div class="card-inner">
-                <h3>Rezumat evenimente</h3>
-                <table class="table">
-                  <tr><td>Ultimul eveniment</td><td id="ultimulEvenimentIstoric">--</td></tr>
-                  <tr><td>Uptime Arduino</td><td id="uptime">--</td></tr>
-                  <tr><td>Total mesaje MQTT</td><td id="totalMessagesTable">0</td></tr>
-                  <tr><td>Ultimul update</td><td id="lastUpdateTable">--</td></tr>
-                </table>
-              </div>
+              <h3>Rezumat</h3>
+              <table class="table">
+                <tr><td>Ultimul eveniment</td><td id="ultimulEvenimentIstoric">--</td></tr>
+                <tr><td>Uptime Arduino</td><td id="uptime">--</td></tr>
+                <tr><td>Total mesaje</td><td id="totalMessagesTable">0</td></tr>
+                <tr><td>Ultimul update</td><td id="lastUpdateTable">--</td></tr>
+              </table>
             </div>
           </section>
         </section>
 
+        <!-- SISTEM -->
         <section id="page-sistem" class="page hidden">
           <section class="two-col">
             <div class="card">
-              <div class="card-inner">
-                <h3>Conexiuni</h3>
-                <table class="table">
-                  <tr><td>Broker MQTT</td><td>broker.emqx.io</td></tr>
-                  <tr><td>WebSocket</td><td>wss://broker.emqx.io:8084/mqtt</td></tr>
-                  <tr><td>Topic</td><td>licenta/stefan/secureaccess/status</td></tr>
-                  <tr><td>MQTT</td><td id="mqttTable">--</td></tr>
-                  <tr><td>ESP32</td><td id="espTable">--</td></tr>
-                  <tr><td>Uptime Arduino</td><td id="uptime2">--</td></tr>
-                </table>
-              </div>
+              <h3>Conexiune MQTT</h3>
+              <table class="table">
+                <tr><td>Broker</td><td>broker.emqx.io</td></tr>
+                <tr><td>WebSocket</td><td>wss://broker.emqx.io:8084/mqtt</td></tr>
+                <tr><td>Topic</td><td>licenta/stefan/secureaccess/status</td></tr>
+                <tr><td>MQTT</td><td id="mqttTable">--</td></tr>
+                <tr><td>ESP32</td><td id="espTable">--</td></tr>
+                <tr><td>Uptime Arduino</td><td id="uptime2">--</td></tr>
+              </table>
             </div>
 
             <div class="card">
-              <div class="card-inner">
-                <h3>Ultimul JSON primit</h3>
-                <div class="raw-json" id="rawJson">{}</div>
-              </div>
+              <h3>Ultimul JSON primit</h3>
+              <div class="raw-json" id="rawJson">{}</div>
             </div>
           </section>
         </section>
@@ -952,11 +977,17 @@
     let totalMessages = 0;
     let lastMessageMillis = 0;
 
+    let doorTimer = 0;
+    let doorTimerInterval = null;
+    let lastDoorOpen = false;
+    let lastAccessState = "";
+
     let stats = {
       totalPermise: 0,
       totalRespinse: 0,
       totalAlarme: 0,
-      totalMiscari: 0
+      totalMiscariExterior: 0,
+      totalMiscariInterior: 0
     };
 
     let lastCountMarker = "";
@@ -984,16 +1015,27 @@
       if (link) link.classList.add("active");
 
       const titles = {
-        dashboard: ["Panou principal", "Dashboard online pentru ușă, RFID, senzori PIR, alarmă și evenimente de securitate."],
-        acces: ["Acces RFID", "Monitorizare pentru card autorizat, card respins și starea ușii."],
-        senzori: ["Senzori PIR și zone", "Vizualizare pentru mișcarea detectată în exterior și hol interior."],
-        securitate: ["Securitate sistem", "Nivel de risc, alarmă, blocare temporară și evenimente critice."],
-        istoric: ["Istoric live", "Evenimente primite prin MQTT de la ESP32."],
-        sistem: ["Sistem și comunicație", "Stare conexiuni, topic MQTT și ultimul pachet JSON primit."]
+        dashboard: ["Panou principal", "Monitorizare compactă pentru ușă, RFID, senzori PIR și alarmă."],
+        acces: ["Acces RFID", "Ultimul UID, status acces și statistici RFID."],
+        senzori: ["PIR și zone", "Mișcare exterior / interior și contorizare separată."],
+        securitate: ["Securitate", "Nivel risc, alarmă, blocare și evenimente critice."],
+        istoric: ["Istoric", "Evenimente live primite de la ESP32."],
+        sistem: ["Sistem", "Conexiuni MQTT, topic și ultimul pachet JSON."]
       };
 
       document.getElementById("pageTitle").textContent = titles[page][0];
       document.getElementById("pageSubtitle").textContent = titles[page][1];
+
+      const topPanel = document.getElementById("topPanel");
+      const timerPanel = document.getElementById("dashboardTimerPanel");
+
+      if (page === "dashboard") {
+        topPanel.classList.remove("single");
+        timerPanel.classList.remove("hidden");
+      } else {
+        topPanel.classList.add("single");
+        timerPanel.classList.add("hidden");
+      }
 
       toggleMenu(false);
     }
@@ -1014,7 +1056,8 @@
     }
 
     function isOne(v) {
-      return normalize(v) === "1" || normalize(v) === "true" || normalize(v) === "activ" || normalize(v) === "activa" || normalize(v) === "activă";
+      const x = normalize(v);
+      return x === "1" || x === "true" || x === "activ" || x === "activa" || x === "activă";
     }
 
     function isDoorOpen(v) {
@@ -1033,16 +1076,44 @@
       return v || "--";
     }
 
+    function updateTimerVisual() {
+      setText("doorTimerValue", doorTimer);
+
+      const deg = Math.max(0, Math.min(360, (doorTimer / 5) * 360));
+      document.getElementById("timerRing").style.setProperty("--timerDeg", deg + "deg");
+
+      if (doorTimer > 0) {
+        setText("doorTimerTitle", doorTimer + " secunde");
+        setText("doorTimerText", "Acces permis. Ușa rămâne validă temporar.");
+      } else {
+        setText("doorTimerTitle", "Inactiv");
+        setText("doorTimerText", "Se activează 5 secunde după acces permis.");
+      }
+    }
+
+    function startDoorTimer() {
+      doorTimer = 5;
+      updateTimerVisual();
+
+      if (doorTimerInterval) {
+        clearInterval(doorTimerInterval);
+      }
+
+      doorTimerInterval = setInterval(() => {
+        doorTimer--;
+
+        if (doorTimer <= 0) {
+          doorTimer = 0;
+          clearInterval(doorTimerInterval);
+          doorTimerInterval = null;
+        }
+
+        updateTimerVisual();
+      }, 1000);
+    }
+
     function updateMqttVisual(state, text) {
-      const cls = state === "ok" ? "pill ok" : state === "bad" ? "pill bad" : "pill warn";
-
-      setText("mqttMainStatus", text);
-      setText("mqttStatus", "MQTT: " + text);
-      setText("mqttSideStatus", "MQTT: " + text);
       setText("mqttTable", text);
-
-      document.getElementById("mqttStatus").className = cls;
-      document.getElementById("mqttSideStatus").className = cls;
     }
 
     function updateStats(d) {
@@ -1058,7 +1129,15 @@
       if (evNorm.includes("permis")) stats.totalPermise++;
       else if (evNorm.includes("respins") || evNorm.includes("refuzat")) stats.totalRespinse++;
       else if (evNorm.includes("alarma") || evNorm.includes("alarmă")) stats.totalAlarme++;
-      else if (evNorm.includes("miscare") || evNorm.includes("mișcare")) stats.totalMiscari++;
+      else if (evNorm.includes("exterior")) stats.totalMiscariExterior++;
+      else if (evNorm.includes("interior") || evNorm.includes("hol")) stats.totalMiscariInterior++;
+
+      setText("totalPermise", stats.totalPermise);
+      setText("totalRespinse", stats.totalRespinse);
+      setText("totalRespinse2", stats.totalRespinse);
+      setText("totalAlarme", stats.totalAlarme);
+      setText("totalMiscariExterior", stats.totalMiscariExterior);
+      setText("totalMiscariInterior", stats.totalMiscariInterior);
     }
 
     function addEvent(d) {
@@ -1088,15 +1167,23 @@
     function renderEvents() {
       const html = events.length
         ? events.map(e => `<div class="event">${e}</div>`).join("")
-        : `<div class="event">Aștept date MQTT...</div>`;
+        : `<div class="event">Aștept date...</div>`;
 
-      setHTML("eventsDashboard", html);
-      setHTML("eventsHistory", html);
+      document.getElementById("eventsHistory").innerHTML = html;
     }
 
-    function setHTML(id, value) {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = value;
+    function updateZones(prefix, pir1Active, pir2Active, doorOpen, alarmActive) {
+      const exterior = document.getElementById("zoneExterior" + prefix);
+      const interior = document.getElementById("zoneInterior" + prefix);
+      const usa = document.getElementById("zoneUsa" + prefix);
+
+      if (exterior) exterior.className = pir1Active ? "zone active" : "zone";
+      if (interior) interior.className = pir2Active ? "zone active" : "zone";
+
+      if (usa) {
+        if (alarmActive) usa.className = "zone alarm";
+        else usa.className = doorOpen ? "zone active" : "zone";
+      }
     }
 
     function updateDashboard(d) {
@@ -1117,23 +1204,27 @@
       const pirLabel = pir1Active || pir2Active ? "Mișcare" : "Normal";
       const alarmLabel = alarmActive ? "Activă" : "Inactivă";
 
+      const accessNorm = normalize(d.acces);
+      if ((doorOpen && !lastDoorOpen) || (accessNorm.includes("permis") && !normalize(lastAccessState).includes("permis"))) {
+        startDoorTimer();
+      }
+
+      lastDoorOpen = doorOpen;
+      lastAccessState = d.acces || "";
+
       setText("usaBox", doorLabel);
       setText("usaPage", doorLabel);
-
       setText("accesBox", accessLabel);
       setText("accesPage", accessLabel);
-
       setText("rfid", d.rfid || "--");
       setText("rfidPage", d.rfid || "--");
-
       setText("pirBox", pirLabel);
       setText("pir1", pir1Active ? "Mișcare" : "Normal");
       setText("pir2", pir2Active ? "Mișcare" : "Normal");
-
       setText("alarmaBox", alarmLabel);
       setText("alarmaPage", alarmLabel);
-
       setText("blocat", blocked ? "Da" : "Nu");
+      setText("blockedDash", blocked ? "Da" : "Nu");
 
       setText("uptime", d.uptime || "--");
       setText("uptime2", d.uptime || "--");
@@ -1143,30 +1234,19 @@
       setText("ultimulEvenimentSec", lastEv);
       setText("ultimulEvenimentIstoric", lastEv);
 
-      setText("totalPermise", stats.totalPermise);
-      setText("totalRespinse", stats.totalRespinse);
-      setText("totalRespinse2", stats.totalRespinse);
-      setText("totalAlarme", stats.totalAlarme);
-      setText("totalMiscari", stats.totalMiscari);
-
-      setText("lastMessage", "Mesaje: " + totalMessages);
       setText("totalMessagesTable", totalMessages);
 
       const nowText = new Date().toLocaleTimeString("ro-RO");
-      setText("lastUpdate", "Update: " + nowText);
       setText("lastUpdateTable", nowText);
+      setText("lastUpdateSide", "Update: " + nowText);
 
-      setText("espStatus", "ESP32: date live");
       setText("espSideStatus", "ESP32: date live");
       setText("espTable", "Date live primite");
-
-      document.getElementById("espStatus").className = "pill ok";
       document.getElementById("espSideStatus").className = "pill ok";
 
-      setClass("usaBox", doorOpen ? "big-text ok" : "big-text");
-      setClass("usaPage", doorOpen ? "big-text ok" : "big-text");
+      setClass("usaBox", doorOpen ? "big-text ok" : "big-text blue");
+      setClass("usaPage", doorOpen ? "big-text ok" : "big-text blue");
 
-      const accessNorm = normalize(d.acces);
       const accessClass =
         accessNorm.includes("permis") ? "big-text ok" :
         accessNorm.includes("respins") || accessNorm.includes("blocat") ? "big-text bad" :
@@ -1176,6 +1256,8 @@
       setClass("accesPage", accessClass);
 
       setClass("pirBox", pir1Active || pir2Active ? "big-text warn" : "big-text ok");
+      setClass("pir1", pir1Active ? "big-text warn" : "big-text ok");
+      setClass("pir2", pir2Active ? "big-text warn" : "big-text ok");
       setClass("alarmaBox", alarmActive ? "big-text bad" : "big-text ok");
       setClass("alarmaPage", alarmActive ? "big-text bad" : "big-text ok");
       setClass("blocat", blocked ? "big-text bad" : "big-text ok");
@@ -1194,17 +1276,8 @@
         }
       }
 
-      const zoneExterior = document.getElementById("zoneExterior");
-      if (zoneExterior) zoneExterior.className = pir1Active ? "zone active" : "zone";
-
-      const zoneInterior = document.getElementById("zoneInterior");
-      if (zoneInterior) zoneInterior.className = pir2Active ? "zone active" : "zone";
-
-      const zoneUsa = document.getElementById("zoneUsa");
-      if (zoneUsa) {
-        if (alarmActive) zoneUsa.className = "zone alarm";
-        else zoneUsa.className = doorOpen ? "zone active" : "zone";
-      }
+      updateZones("Dash", pir1Active, pir2Active, doorOpen, alarmActive);
+      updateZones("Pir", pir1Active, pir2Active, doorOpen, alarmActive);
 
       const raw = document.getElementById("rawJson");
       if (raw) raw.textContent = JSON.stringify(d, null, 2);
@@ -1229,8 +1302,6 @@
           if (err) {
             updateMqttVisual("bad", "Eroare subscribe");
             console.error("Eroare subscribe MQTT:", err);
-          } else {
-            console.log("Abonat la topic:", MQTT_TOPIC);
           }
         });
       });
@@ -1239,7 +1310,6 @@
         if (topic !== MQTT_TOPIC) return;
 
         const text = message.toString();
-        console.log("MQTT primit:", text);
 
         try {
           const data = JSON.parse(text);
@@ -1249,23 +1319,16 @@
         }
       });
 
-      client.on("reconnect", () => {
-        updateMqttVisual("warn", "Reconectare...");
-      });
-
+      client.on("reconnect", () => updateMqttVisual("warn", "Reconectare..."));
       client.on("error", (err) => {
         updateMqttVisual("bad", "Eroare");
         console.error("MQTT error:", err);
       });
-
-      client.on("close", () => {
-        updateMqttVisual("bad", "Deconectat");
-      });
+      client.on("close", () => updateMqttVisual("bad", "Deconectat"));
     }
 
     setInterval(() => {
       if (lastMessageMillis === 0) {
-        setText("espStatus", "ESP32: aștept date");
         setText("espSideStatus", "ESP32: aștept date");
         setText("espTable", "Aștept date");
         return;
@@ -1274,15 +1337,13 @@
       const diff = Math.floor((Date.now() - lastMessageMillis) / 1000);
 
       if (diff > 8) {
-        setText("espStatus", "ESP32: fără date recente");
         setText("espSideStatus", "ESP32: fără date recente");
         setText("espTable", "Fără date recente");
-
-        document.getElementById("espStatus").className = "pill warn";
         document.getElementById("espSideStatus").className = "pill warn";
       }
     }, 1000);
 
+    updateTimerVisual();
     connectMQTT();
   </script>
 </body>
