@@ -438,12 +438,12 @@
 
     .card {
       border-radius: 16px;
-      padding: 14px;
+      padding: 16px;
       overflow: hidden;
     }
 
     .metric {
-      min-height: 132px;
+      min-height: 148px;
     }
 
     .metric-top {
@@ -517,7 +517,7 @@
 
     .diagram {
       width: 100%;
-      min-height: 178px;
+      min-height: 220px;
       display: grid;
       grid-template-columns: 1fr 34px 1fr 34px 1fr;
       align-items: center;
@@ -534,7 +534,7 @@
     }
 
     .zone {
-      height: 122px;
+      height: 150px;
       display: grid;
       place-items: center;
       text-align: center;
@@ -647,14 +647,50 @@
       line-height: 1.05;
     }
 
+    body.not-dashboard .three-col .card,
+    body.not-dashboard .four-col .card {
+      min-height: 145px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    body.not-dashboard .two-col .card {
+      min-height: 330px;
+    }
+
+    body.not-dashboard #page-sistem .two-col .card {
+      min-height: 360px;
+    }
+
+    body.not-dashboard #page-istoric .two-col .card {
+      min-height: 390px;
+    }
+
+    body.not-dashboard .events-list {
+      max-height: 330px;
+    }
+
+    body.not-dashboard .raw-json {
+      max-height: 310px;
+    }
+
+    body.not-dashboard .big-text {
+      margin-top: 14px;
+    }
+
+    body.not-dashboard .big-value {
+      margin-top: 14px;
+    }
+
 
     body.not-dashboard .top-panel {
-      margin-top: 38px;
-      margin-bottom: 24px;
+      margin-top: 0;
+      margin-bottom: 18px;
     }
 
     body.not-dashboard .page:not(.hidden) {
-      margin-top: 10px;
+      margin-top: 0;
     }
 
     .hidden {
