@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SecureAccess MQTT</title>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<style>
+:root{
+  --bg:#070b0e;--bg2:#0b1115;--side:#080d10;--panel:#11181e;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#f4f7f5;--muted:#9aa7a2;--green:#55f08f;--green2:#1ecb72;--red:#ff526f;--orange:#ffb74a;--cyan:#5df0dd;--blue:#7bc7ff;
+  --shadow:0 22px 60px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at 18% 0%,rgba(85,240,143,.12),transparent 32%),radial-gradient(circle at 90% 10%,rgba(93,240,221,.06),transparent 28%),linear-gradient(135deg,var(--bg),var(--bg2));}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 86%)}
+a{color:inherit;text-decoration:none}.app{min-height:100vh;display:grid;grid-template-columns:280px 1fr}.sidebar{height:100vh;position:sticky;top:0;padding:24px 18px;background:rgba(8,13,16,.88);border-right:1px solid var(--line);backdrop-filter:blur(18px)}
+.brand{display:flex;align-items:center;gap:13px;margin-bottom:32px}.brand-logo{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--green),var(--green2));color:#04100a;font-weight:950;font-size:20px;box-shadow:0 14px 34px rgba(85,240,143,.23)}.brand h1{font-size:23px;line-height:1;letter-spacing:-.05em}.brand p{margin-top:5px;color:var(--muted);font-size:13px}.nav-title{margin-bottom:12px;color:#65726d;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.18em}.nav{display:grid;gap:9px}.nav a{height:53px;border-radius:17px;padding:0 13px;display:flex;align-items:center;gap:12px;border:1px solid transparent;color:#dce8e1;font-weight:750;font-size:15px;transition:.18s ease}.nav a:hover,.nav a.active{background:linear-gradient(135deg,rgba(85,240,143,.18),rgba(85,240,143,.06));border-color:rgba(85,240,143,.26);color:#fff}.nav-icon{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.05);color:var(--green);font-size:16px}.side-device{position:absolute;left:18px;right:18px;bottom:22px;padding:16px;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,.035)}.device-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}.chip-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;border:1px solid rgba(85,240,143,.28);color:var(--green);background:rgba(85,240,143,.08);font-size:20px}.device-head strong{display:block;font-size:15px}.device-head span{color:var(--muted);font-size:12px}.device-row{display:flex;justify-content:space-between;gap:12px;padding-top:12px;margin-top:12px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}.device-row b{color:var(--text)}
+.main{width:100%;max-width:1560px;margin:0 auto;padding:24px}.topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.page-title{display:flex;align-items:center;gap:13px}.title-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;color:var(--green);border:1px solid rgba(85,240,143,.24);background:rgba(85,240,143,.08)}.page-title h2{font-size:30px;letter-spacing:-.045em;line-height:1.1}.page-title p{margin-top:4px;color:var(--muted);font-size:14px}.top-status{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap}.pill{min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:0 15px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#e8f5ed;font-size:14px;font-weight:800;white-space:nowrap}.pill.ok{color:#baffd5;border-color:rgba(85,240,143,.20);background:rgba(85,240,143,.08)}.pill.bad{color:#ffc1ca;border-color:rgba(255,82,111,.20);background:rgba(255,82,111,.08)}.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}.dot.red{background:var(--red);box-shadow:0 0 14px var(--red)}.dot.orange{background:var(--orange);box-shadow:0 0 14px var(--orange)}
+.hero{min-height:215px;display:grid;grid-template-columns:1fr 360px;gap:18px;padding:22px;margin-bottom:16px;border-radius:28px;border:1px solid var(--line);background:radial-gradient(circle at 12% 0%,rgba(85,240,143,.12),transparent 35%),linear-gradient(180deg,rgba(18,27,34,.90),rgba(13,19,24,.94));box-shadow:var(--shadow)}.hero-left{display:flex;align-items:center;gap:24px}.shield{width:140px;height:140px;flex:0 0 140px;border-radius:50%;display:grid;place-items:center;color:var(--green);background:radial-gradient(circle,rgba(85,240,143,.18),rgba(85,240,143,.03) 65%,transparent 66%);border:1px solid rgba(85,240,143,.08);font-size:72px}.shield.alarm{color:var(--red);background:radial-gradient(circle,rgba(255,82,111,.18),rgba(255,82,111,.03) 65%,transparent 66%)}.hero-copy h1{color:var(--green);font-size:36px;letter-spacing:-.055em;line-height:1.05;margin-bottom:10px}.hero-copy h1.alarm{color:var(--red)}.hero-copy p{color:#cbd5d0;font-size:16px;line-height:1.45}.hero-mini{margin-top:18px;display:flex;flex-wrap:wrap;gap:9px}.timer-card{border:1px solid var(--line2);border-radius:22px;background:rgba(255,255,255,.035);display:grid;place-items:center;padding:18px;text-align:center}.timer-title{color:var(--muted);font-size:12px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}.timer-ring{width:118px;height:118px;border-radius:50%;display:grid;place-items:center;margin:auto;background:conic-gradient(var(--green) var(--timerDeg,0deg),rgba(255,255,255,.09) 0deg);position:relative}.timer-ring::before{content:"";position:absolute;width:88px;height:88px;border-radius:50%;background:#121b22;border:1px solid var(--line)}.timer-number{position:relative;font-size:42px;font-weight:950;line-height:1}.timer-card small{color:var(--muted);display:block;margin-top:8px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}.status-card{min-height:132px;display:flex;align-items:center;gap:18px;padding:18px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(18,27,34,.88),rgba(13,19,24,.94));box-shadow:var(--shadow)}.round-icon{width:72px;height:72px;flex:0 0 72px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(85,240,143,.45);color:var(--green);background:rgba(85,240,143,.06);font-size:31px}.round-icon.cyan{color:var(--cyan);border-color:rgba(93,240,221,.45);background:rgba(93,240,221,.06)}.round-icon.red{color:var(--red);border-color:rgba(255,82,111,.45);background:rgba(255,82,111,.06)}.status-text h3{font-size:18px;margin-bottom:9px}.status-text strong{display:block;font-size:14px;font-weight:950;text-transform:uppercase;letter-spacing:.05em}.green{color:var(--green)!important}.red{color:var(--red)!important}.cyan{color:var(--cyan)!important}.orange{color:var(--orange)!important}.status-text span{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-bottom:16px}.panel{padding:20px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(18,27,34,.88),rgba(13,19,24,.94));box-shadow:var(--shadow)}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.panel-head h2{font-size:20px;letter-spacing:-.03em}.flow{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;align-items:center;gap:8px}.zone{min-height:142px;display:grid;place-items:center;text-align:center;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,.026)}.zone.active{border-color:rgba(85,240,143,.42);box-shadow:0 0 0 1px rgba(85,240,143,.08),0 18px 34px rgba(85,240,143,.09)}.zone-icon{font-size:32px;margin-bottom:10px}.zone b{display:block;font-size:20px}.zone span{color:var(--muted);font-size:13px}.arrow{text-align:center;font-size:34px;color:var(--green)}
+.events{display:grid;gap:8px}.event{min-height:44px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:9px 10px;border-radius:14px;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.024)}.event-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:14px;background:rgba(85,240,143,.16);color:var(--green)}.event-icon.red{background:rgba(255,82,111,.15);color:var(--red)}.event-icon.cyan{background:rgba(93,240,221,.14);color:var(--cyan)}.event strong{font-size:14px}.event span{color:var(--muted);font-size:13px}.event time{color:var(--muted);font-size:13px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.stat{min-height:104px;display:flex;align-items:center;gap:16px;padding:16px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(18,27,34,.88),rgba(13,19,24,.94));box-shadow:var(--shadow)}.stat-icon{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:27px;border:1px solid rgba(85,240,143,.24);color:var(--green);background:rgba(85,240,143,.06)}.stat-icon.red{color:var(--red);border-color:rgba(255,82,111,.24);background:rgba(255,82,111,.06)}.stat-icon.orange{color:var(--orange);border-color:rgba(255,183,74,.24);background:rgba(255,183,74,.06)}.stat-icon.cyan{color:var(--cyan);border-color:rgba(93,240,221,.24);background:rgba(93,240,221,.06)}.stat span{color:var(--muted);font-size:14px}.stat strong{display:block;font-size:32px;line-height:1;margin-top:4px}.raw{white-space:pre-wrap;word-break:break-word;background:#080c0f;border:1px solid var(--line);border-radius:18px;padding:15px;color:#cfe6d8;font-size:12px;line-height:1.55;max-height:240px;overflow:auto}.mobile-top{display:none}.toast{position:fixed;right:18px;bottom:18px;z-index:20;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:rgba(8,12,15,.82);backdrop-filter:blur(16px);color:var(--muted);box-shadow:var(--shadow);font-size:13px;max-width:360px}
+@media(max-width:1180px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:16px}.mobile-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.hero{grid-template-columns:1fr}.cards,.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:700px){.topbar{align-items:flex-start;flex-direction:column}.hero-left{align-items:flex-start;flex-direction:column}.shield{width:110px;height:110px;font-size:56px}.hero-copy h1{font-size:31px}.cards,.stats{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}.status-card{min-height:118px}.event{grid-template-columns:34px 1fr}.event time{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-logo">SA</div><div><h1>SecureAccess</h1><p>Smart Building</p></div></div>
+    <div class="nav-title">Navigare</div>
+    <nav class="nav">
+      <a class="active" href="#dashboard"><span class="nav-icon">⌂</span>Dashboard</a>
+      <a href="#acces"><span class="nav-icon">▣</span>Acces RFID</a>
+      <a href="#pir"><span class="nav-icon">⌁</span>PIR</a>
+      <a href="#istoric"><span class="nav-icon">◷</span>Istoric</a>
+      <a href="#diagnostic"><span class="nav-icon">⚙</span>Diagnostic</a>
+    </nav>
+    <div class="side-device">
+      <div class="device-head"><div class="chip-icon">▣</div><div><strong>ESP32 + MQTT</strong><span>broker.emqx.io</span></div></div>
+      <div class="device-row"><span>Topic</span><b>secureaccess/status</b></div>
+      <div class="device-row"><span>Uptime Arduino</span><b id="uptimeArduinoSide">--</b></div>
+      <div class="device-row"><span>microSD</span><b id="sdStatusSide">--</b></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="mobile-top"><div class="brand"><div class="brand-logo">SA</div><div><h1>SecureAccess</h1><p>MQTT Live</p></div></div></div>
+    <header class="topbar">
+      <div class="page-title"><div class="title-icon">◇</div><div><h2>Dashboard MQTT</h2><p>Sistem de control acces si monitorizare inteligenta</p></div></div>
+      <div class="top-status">
+        <div class="pill bad" id="mqttPill"><span class="dot red" id="mqttDot"></span><span id="mqttStatus">MQTT neconectat</span></div>
+        <div class="pill" id="topicPill">Topic: licenta/stefan/secureaccess/status</div>
+        <div class="pill">Update: <span id="lastUpdate">--</span></div>
+      </div>
+    </header>
+
+    <section class="hero" id="dashboard">
+      <div class="hero-left"><div class="shield" id="shieldIcon">✓</div><div class="hero-copy"><h1 id="heroTitle">Astept date MQTT</h1><p id="heroSub">Porneste ESP32 si verifica publicarea catre EMQX.</p><div class="hero-mini"><div class="pill ok"><span class="dot"></span><span id="heroInfo">Arduino → ESP32 → MQTT → Site online</span></div></div></div></div>
+      <div class="timer-card"><div class="timer-title">Inchidere usa automata</div><div class="timer-ring"><div class="timer-number"><span class="doorTimer">0</span></div></div><small>Timer activ cand usa este deschisa</small></div>
+    </section>
+
+    <section class="cards" id="acces">
+      <div class="status-card"><div class="round-icon">▯</div><div class="status-text"><h3>Usa / Servo</h3><strong id="usaState" class="cyan">--</strong><span id="servoState">Servo: --</span></div></div>
+      <div class="status-card"><div class="round-icon">▣</div><div class="status-text"><h3>RFID</h3><strong id="rfidState" class="green">--</strong><span id="rfidSub">Asteapta card</span></div></div>
+      <div class="status-card"><div class="round-icon cyan">⌁</div><div class="status-text"><h3>PIR</h3><strong id="pirState" class="cyan">--</strong><span id="pirSub">Zona linistita</span></div></div>
+      <div class="status-card"><div class="round-icon red">!</div><div class="status-text"><h3>Alarma</h3><strong id="alarmState" class="red">--</strong><span id="alarmSub">Sistem OK</span></div></div>
+    </section>
+
+    <section class="grid" id="pir">
+      <div class="panel"><div class="panel-head"><h2>Flux acces</h2><div class="pill">Exterior → Usa → Hol</div></div><div class="flow"><div class="zone" id="zoneExterior"><div><div class="zone-icon">🌳</div><b>Exterior</b><span>PIR exterior</span></div></div><div class="arrow">→</div><div class="zone" id="zoneUsa"><div><div class="zone-icon">🚪</div><b>Usa</b><span>Control acces</span></div></div><div class="arrow">→</div><div class="zone" id="zoneInterior"><div><div class="zone-icon">🏠</div><b>Hol interior</b><span>PIR interior</span></div></div></div></div>
+      <div class="panel" id="istoric"><div class="panel-head"><h2>Evenimente recente</h2><div class="pill">Live MQTT</div></div><div class="events" id="eventsBox"><div class="event"><div class="event-icon">i</div><div><strong>Astept evenimente</strong><br><span>Conecteaza ESP32 la MQTT</span></div><time>--:--</time></div></div></div>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><div class="stat-icon">♙</div><div><span>Acces permise</span><strong id="totalPermise">0</strong></div></div>
+      <div class="stat"><div class="stat-icon red">♙</div><div><span>Acces refuzate</span><strong id="totalRespinse">0</strong></div></div>
+      <div class="stat"><div class="stat-icon orange">!</div><div><span>Alarme declansate</span><strong id="totalAlarme">0</strong></div></div>
+      <div class="stat"><div class="stat-icon cyan">⌁</div><div><span>Miscari detectate</span><strong id="totalMiscari">0</strong></div></div>
+    </section>
+
+    <section class="panel" id="diagnostic" style="margin-top:16px"><div class="panel-head"><h2>Ultimul mesaj MQTT</h2><div class="pill">EMQX WebSocket</div></div><div class="raw" id="rawJson">Nu exista mesaj primit inca.</div></section>
+  </main>
+</div>
+<div class="toast" id="toast">Se incearca conectarea la brokerul MQTT...</div>
+<script>
+const MQTT_BROKER_URL = "wss://broker.emqx.io:8084/mqtt";
+const MQTT_TOPIC = "licenta/stefan/secureaccess/status";
+
+let lastDoorState = "";
+let doorTimer = 0;
+let timerInterval = null;
+let recentEvents = [];
+let stats = {permise:0, respinse:0, alarme:0, miscari:0};
+let lastMarker = "";
+let lastMessageTs = 0;
+
+function el(id){return document.getElementById(id)}
+function setText(id,val){const x=el(id); if(x) x.textContent = val ?? "--"}
+function setClass(id,cls){const x=el(id); if(x) x.className = cls}
+function showToast(msg){const t=el("toast"); t.textContent=msg; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.textContent="Conexiune MQTT activa pentru site-ul online.",5000)}
+function updateTimer(){document.querySelectorAll(".doorTimer").forEach(x=>x.textContent=doorTimer);document.querySelectorAll(".timer-ring").forEach(x=>{const deg=Math.max(0,Math.min(360,doorTimer/5*360));x.style.setProperty("--timerDeg",deg+"deg")})}
+function startDoorTimer(){doorTimer=5;updateTimer();if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(()=>{doorTimer--;if(doorTimer<0)doorTimer=0;updateTimer();if(doorTimer<=0){clearInterval(timerInterval);timerInterval=null}},1000)}
+function stopDoorTimer(){doorTimer=0;updateTimer();if(timerInterval){clearInterval(timerInterval);timerInterval=null}}
+function normalize(v){return String(v ?? "").trim().toLowerCase()}
+function accessText(v){v=normalize(v); if(v.includes("permis"))return "PERMIS"; if(v.includes("respins")||v.includes("refuzat"))return "RESPINS"; if(v.includes("blocat"))return "BLOCAT"; if(v==="standby"||v==="")return "STANDBY"; return String(v).toUpperCase()}
+function accessClass(v){v=normalize(v); return (v.includes("respins")||v.includes("refuzat")||v.includes("blocat")) ? "red" : "green"}
+function isDoorOpen(v){v=normalize(v); return v.includes("deschisa") || v.includes("deschis") || v === "open" || v === "1"}
+function isActive(v){v=normalize(v); return v==="1" || v==="true" || v.includes("activ") || v.includes("miscare")}
+function eventType(ev){ev = String(ev||""); if(ev.includes("Acces permis"))return "PERMIS"; if(ev.includes("Acces respins")||ev.includes("Acces refuzat"))return "RESPINS"; if(ev.includes("Alarma"))return "CRITIC"; if(ev.includes("Miscare"))return "MISCARE"; return "INFO"}
+function addEventFromData(d){const ev = d.eveniment || d.ultimulEveniment || "update"; if(!ev || ev === "update") return; const marker = `${d.uptime||""}|${ev}|${d.rfid||""}|${Date.now()}`; const simpleMarker = `${d.uptime||""}|${ev}|${d.rfid||""}`; if(simpleMarker === lastMarker) return; lastMarker = simpleMarker; const type = eventType(ev); const line = {time:d.uptime || new Date().toLocaleTimeString("ro-RO",{hour:"2-digit",minute:"2-digit",second:"2-digit"}), title:ev, sub:`${d.rfid && d.rfid !== "-" ? "UID: " + d.rfid + " | " : ""}${type}`, type}; recentEvents.unshift(line); recentEvents = recentEvents.slice(0,8); if(type==="PERMIS")stats.permise++; if(type==="RESPINS")stats.respinse++; if(type==="CRITIC")stats.alarme++; if(type==="MISCARE")stats.miscari++; renderEvents(); renderStats();}
+function renderEvents(){const box=el("eventsBox"); if(!box)return; if(recentEvents.length===0){box.innerHTML="<div class='event'><div class='event-icon'>i</div><div><strong>Astept evenimente</strong><br><span>Sistem live MQTT</span></div><time>--:--</time></div>";return} box.innerHTML=recentEvents.map(e=>{let icon="i", cls="event-icon"; if(e.type==="PERMIS"){icon="✓"} else if(e.type==="RESPINS"||e.type==="CRITIC"){icon="×";cls="event-icon red"} else if(e.type==="MISCARE"){icon="⌁";cls="event-icon cyan"} return `<div class='event'><div class='${cls}'>${icon}</div><div><strong>${e.title}</strong><br><span>${e.sub}</span></div><time>${e.time}</time></div>`}).join("")}
+function renderStats(){setText("totalPermise",stats.permise);setText("totalRespinse",stats.respinse);setText("totalAlarme",stats.alarme);setText("totalMiscari",stats.miscari)}
+function updateFlow(d){const p1=isActive(d.pir1), p2=isActive(d.pir2), door=isDoorOpen(d.usa); el("zoneExterior").className=p1?"zone active":"zone"; el("zoneInterior").className=p2?"zone active":"zone"; el("zoneUsa").className=door?"zone active":"zone"}
+function updateDashboard(d, raw){const doorOpen=isDoorOpen(d.usa); const pirActive=isActive(d.pir1)||isActive(d.pir2); const alarmActive=isActive(d.alarma); const uid=d.rfid || "-"; lastMessageTs=Date.now();
+  setText("lastUpdate","acum"); setText("rawJson", raw || JSON.stringify(d,null,2)); setText("uptimeArduinoSide", d.uptime || "--"); setText("sdStatusSide", d.sd || "--");
+  setText("heroTitle", alarmActive ? "Alarma activa" : "Sistem activ si securizat"); el("heroTitle").className = alarmActive ? "alarm" : ""; el("shieldIcon").className = alarmActive ? "shield alarm" : "shield"; el("shieldIcon").textContent = alarmActive ? "!" : "✓";
+  setText("heroSub", alarmActive ? "Eveniment critic detectat. Verifica zona monitorizata." : "Date primite live prin MQTT de la ESP32."); setText("heroInfo", alarmActive ? "Eveniment critic detectat" : "Cladire protejata • Acces controlat • Monitorizare activa");
+  setText("usaState", doorOpen ? "DESCHISA" : "INCHISA"); setClass("usaState", doorOpen ? "green" : "cyan"); setText("servoState", doorOpen ? "Servo: 90°" : "Servo: 0°");
+  setText("rfidState", accessText(d.acces)); setClass("rfidState", accessClass(d.acces)); setText("rfidSub", uid === "-" ? "Asteapta card" : uid);
+  setText("pirState", pirActive ? "MISCARE" : "FARA MISCARE"); setClass("pirState", "cyan"); setText("pirSub", pirActive ? "Activitate detectata" : "Zona linistita");
+  setText("alarmState", alarmActive ? "ACTIVA" : "INACTIVA"); setClass("alarmState", "red"); setText("alarmSub", alarmActive ? "Verifica zona" : "Sistem OK");
+  if(doorOpen && lastDoorState !== "deschisa") startDoorTimer(); if(!doorOpen && lastDoorState === "deschisa") stopDoorTimer(); lastDoorState = doorOpen ? "deschisa" : "inchisa";
+  updateFlow(d); addEventFromData(d);
+}
+function setMqttState(state,msg){const pill=el("mqttPill"), dot=el("mqttDot"), text=el("mqttStatus"); text.textContent=msg; if(state==="ok"){pill.className="pill ok";dot.className="dot"} else if(state==="wait"){pill.className="pill";dot.className="dot orange"} else {pill.className="pill bad";dot.className="dot red"}}
+function connectMQTT(){const clientId = "secureaccess_web_" + Math.random().toString(16).slice(2); setMqttState("wait","MQTT conectare..."); const client = mqtt.connect(MQTT_BROKER_URL,{clientId, clean:true, connectTimeout:10000, reconnectPeriod:3000});
+  client.on("connect",()=>{setMqttState("ok","MQTT conectat"); showToast("Conectat la EMQX. Ma abonez la topic..."); client.subscribe(MQTT_TOPIC,{qos:0},err=>{if(err){setMqttState("bad","Subscribe esuat"); showToast("Eroare la subscribe: "+err.message)} else {showToast("Abonat la topic: "+MQTT_TOPIC)}})});
+  client.on("reconnect",()=>setMqttState("wait","MQTT reconectare..."));
+  client.on("close",()=>setMqttState("bad","MQTT deconectat"));
+  client.on("error",err=>{setMqttState("bad","MQTT eroare"); showToast("MQTT eroare: "+err.message)});
+  client.on("message",(topic,payload)=>{const raw=payload.toString(); try{const d=JSON.parse(raw); updateDashboard(d,raw)}catch(e){setText("rawJson",raw); showToast("Mesaj primit, dar nu este JSON valid.")}});
+}
+setInterval(()=>{if(lastMessageTs){const s=Math.floor((Date.now()-lastMessageTs)/1000); setText("lastUpdate", s===0?"acum":s+" sec")}},1000);
+updateTimer(); renderStats(); connectMQTT();
+</script>
+</body>
+</html>
